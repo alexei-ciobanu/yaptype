@@ -34,26 +34,30 @@ uv pip install "nemo_toolkit[asr] @ git+https://github.com/NVIDIA-NeMo/NeMo.git@
 
 ## Usage
 
-### Client-server mode (recommended)
-
-Manage the server with `yapctl`:
+### Quick start
 
 ```bash
-# Start server in background (loads model, no terminal window needed)
+# Start everything (server + dictation) in one command
 uv run --no-sync python yapctl.py start
 
-# Check status
-uv run --no-sync python yapctl.py status
+# Hold Right Ctrl to record, release to transcribe & paste
+# Press Ctrl+C to stop dictating (server stays running in background)
 
-# View server logs
-uv run --no-sync python yapctl.py logs
-uv run --no-sync python yapctl.py logs -f  # follow mode
-
-# Stop server
+# Stop the background server when done
 uv run --no-sync python yapctl.py stop
 ```
 
-Then launch the client whenever you need dictation — starts instantly:
+### Server management
+
+```bash
+uv run --no-sync python yapctl.py status       # Check if server is running
+uv run --no-sync python yapctl.py server       # Start ONLY the server (background)
+uv run --no-sync python yapctl.py logs         # View server logs
+uv run --no-sync python yapctl.py logs -f      # Follow server logs
+uv run --no-sync python yapctl.py restart      # Restart server + dictation
+```
+
+After the server is running, you can start/stop the dictation client independently:
 
 ```bash
 # Terminal 2: start client (connects to server, no model loading)
