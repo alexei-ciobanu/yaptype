@@ -11,6 +11,7 @@ yaptype/
 ├── .python-version       # Python 3.10
 ├── pyproject.toml        # Dependencies & uv config (torch CUDA, NeMo)
 ├── uv.lock               # Lockfile
+├── yapctl.py             # Server manager CLI (start/stop/status/logs)
 ├── asr_server.py         # ASR server (loads model once, stays hot in VRAM)
 ├── dictate_client.py     # Push-to-talk client (connects to server, starts instantly)
 ├── dictate.py            # Standalone push-to-talk (no server needed, slower startup)
@@ -35,14 +36,24 @@ uv pip install "nemo_toolkit[asr] @ git+https://github.com/NVIDIA-NeMo/NeMo.git@
 
 ### Client-server mode (recommended)
 
-Start the server once — it loads the model and keeps it hot in VRAM:
+Manage the server with `yapctl`:
 
 ```bash
-# Terminal 1: start server (loads model ~20s, then stays ready)
-uv run --no-sync python asr_server.py
+# Start server in background (loads model, no terminal window needed)
+uv run --no-sync python yapctl.py start
+
+# Check status
+uv run --no-sync python yapctl.py status
+
+# View server logs
+uv run --no-sync python yapctl.py logs
+uv run --no-sync python yapctl.py logs -f  # follow mode
+
+# Stop server
+uv run --no-sync python yapctl.py stop
 ```
 
-Then launch the client whenever you need dictation — it starts instantly:
+Then launch the client whenever you need dictation — starts instantly:
 
 ```bash
 # Terminal 2: start client (connects to server, no model loading)

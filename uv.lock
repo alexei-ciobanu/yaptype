@@ -19,7 +19,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-11T08:20:18.7472213Z"
+exclude-newer = "2026-04-11T08:49:41.2990809Z"
 exclude-newer-span = "P7D"
 
 [options.exclude-newer-package]
@@ -2016,41 +2016,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/86/c2/dec9722dc3474c164a0b6bcd9a7ed7da542c98af8cabce05374abab35edd/multiprocess-0.70.19-py311-none-any.whl", hash = "sha256:928851ae7973aea4ce0eaf330bbdafb2e01398a91518d5c8818802845564f45c", size = 144457, upload-time = "2026-01-19T06:47:33.711Z" },
     { url = "https://files.pythonhosted.org/packages/71/70/38998b950a97ea279e6bd657575d22d1a2047256caf707d9a10fbce4f065/multiprocess-0.70.19-py312-none-any.whl", hash = "sha256:3a56c0e85dd5025161bac5ce138dcac1e49174c7d8e74596537e729fd5c53c28", size = 150281, upload-time = "2026-01-19T06:47:35.037Z" },
     { url = "https://files.pythonhosted.org/packages/7e/82/69e539c4c2027f1e1697e09aaa2449243085a0edf81ae2c6341e84d769b6/multiprocess-0.70.19-py39-none-any.whl", hash = "sha256:0d4b4397ed669d371c81dcd1ef33fd384a44d6c3de1bd0ca7ac06d837720d3c5", size = 133477, upload-time = "2026-01-19T06:47:38.619Z" },
-]
-
-[[package]]
-name = "nemo-parakeet"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "nemo-toolkit", extra = ["asr"] },
-    { name = "pyautogui" },
-    { name = "pynput" },
-    { name = "pyperclip" },
-    { name = "sounddevice" },
-    { name = "torch" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "ruff" },
-    { name = "ty" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "nemo-toolkit", extras = ["asr"], specifier = ">=2.7.2" },
-    { name = "pyautogui", specifier = ">=0.9.54" },
-    { name = "pynput", specifier = ">=1.8.1" },
-    { name = "pyperclip", specifier = ">=1.11.0" },
-    { name = "sounddevice", specifier = ">=0.5.5" },
-    { name = "torch", specifier = ">=2.8", index = "https://download.pytorch.org/whl/cu128" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "ruff", specifier = ">=0.15.10" },
-    { name = "ty", specifier = ">=0.0.29" },
 ]
 
 [[package]]
@@ -4526,6 +4491,41 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/50/55/15a7b8a56590e66ccd374bbfa3f9ffc45b810886c8c3b614e3f90bd2367c/xxhash-3.6.0-pp311-pypy311_pp73-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:881b47fc47e051b37d94d13e7455131054b56749b91b508b0907eb07900d1c13", size = 36251, upload-time = "2025-10-02T14:37:04.44Z" },
     { url = "https://files.pythonhosted.org/packages/62/b2/5ac99a041a29e58e95f907876b04f7067a0242cb85b5f39e726153981503/xxhash-3.6.0-pp311-pypy311_pp73-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c6dc31591899f5e5666f04cc2e529e69b4072827085c1ef15294d91a004bc1bd", size = 32481, upload-time = "2025-10-02T14:37:05.869Z" },
     { url = "https://files.pythonhosted.org/packages/7b/d9/8d95e906764a386a3d3b596f3c68bb63687dfca806373509f51ce8eea81f/xxhash-3.6.0-pp311-pypy311_pp73-win_amd64.whl", hash = "sha256:15e0dac10eb9309508bfc41f7f9deaa7755c69e35af835db9cb10751adebc35d", size = 31565, upload-time = "2025-10-02T14:37:06.966Z" },
+]
+
+[[package]]
+name = "yaptype"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "nemo-toolkit", extra = ["asr"] },
+    { name = "pyautogui" },
+    { name = "pynput" },
+    { name = "pyperclip" },
+    { name = "sounddevice" },
+    { name = "torch" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "ruff" },
+    { name = "ty" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "nemo-toolkit", extras = ["asr"], specifier = ">=2.7.2" },
+    { name = "pyautogui", specifier = ">=0.9.54" },
+    { name = "pynput", specifier = ">=1.8.1" },
+    { name = "pyperclip", specifier = ">=1.11.0" },
+    { name = "sounddevice", specifier = ">=0.5.5" },
+    { name = "torch", specifier = ">=2.8", index = "https://download.pytorch.org/whl/cu128" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "ruff", specifier = ">=0.15.10" },
+    { name = "ty", specifier = ">=0.0.29" },
 ]
 
 [[package]]
