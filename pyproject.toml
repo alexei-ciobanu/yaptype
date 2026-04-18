@@ -1,0 +1,89 @@
+[project]
+name = "yaptype"
+version = "0.1.0"
+description = "Push-to-talk voice dictation powered by NVIDIA Parakeet ASR"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "nemo-toolkit[asr]>=2.7.2",
+    "pyautogui>=0.9.54",
+    "pynput>=1.8.1",
+    "pyperclip>=1.11.0",
+    "sounddevice>=0.5.5",
+    "torch>=2.8",
+]
+
+[tool.uv]
+# Exempt PyTorch packages from global exclude-newer (they lack upload dates on the CUDA index)
+# NOTE: parakeet-unified-en-0.6b requires NeMo >= 2.7.3 (not yet on PyPI as of 2026-04-18).
+#   After `uv sync`, upgrade NeMo from main branch:
+#   uv pip install "nemo_toolkit[asr] @ git+https://github.com/NVIDIA-NeMo/NeMo.git@main" --no-deps
+#   Then use `uv run --no-sync` to avoid reverting NeMo back to 2.7.2.
+exclude-newer-package = { torch = false }
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu128" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.10",
+    "ty>=0.0.29",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "SIM",   # flake8-simplify
+    "TCH",   # flake8-type-checking
+    "RUF",   # ruff-specific rules
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.ruff.lint.per-file-ignores]
+# These files intentionally suppress stderr before imports (for NeMo/PyTorch noise)
+"dictate.py" = ["E402", "SIM115"]
+"asr_server.py" = ["E402", "SIM115"]
+"transcribe.py" = ["E402"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["yaptype"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ty]
+[tool.ty.rules]
+possibly-unresolved-reference = "warn"
+
+[tool.ty.analysis]
+# NeMo and related ML libs have incomplete/missing type stubs
+replace-imports-with-any = [
+    "nemo.**",
+    "nemo_toolkit.**",
+    "omegaconf.**",
+    "sounddevice.**",
+    "pyautogui.**",
+    "pyperclip.**",
+    "pynput.**",
+    "soundfile.**",
+]
