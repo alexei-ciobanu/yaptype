@@ -127,4 +127,19 @@ uv run ty check
 - **Python** 3.10
 - **PyTorch** 2.11.0+cu128
 - **NeMo** 2.8.0rc0 (from main branch)
-- **Model:** nvidia/parakeet-unified-en-0.6b (~1.2 GB, cached in `~/.cache/huggingface/`)
+- **Model (nemo):** nvidia/parakeet-unified-en-0.6b (~1.2 GB, cached in `~/.cache/huggingface/`)
+
+### llama.cpp backend (alternative)
+
+You can also use Qwen3-ASR via llama-server instead of NeMo:
+
+```bash
+# Install llama.cpp and start the server
+llama-server -hf ggml-org/Qwen3-ASR-0.6B-GGUF
+
+# Use the llama backend
+uv run --no-sync python yapctl.py --backend llama start
+```
+
+The llama backend requires no NeMo/PyTorch — just llama-server running separately.
+Uses ~800MB VRAM (vs ~2GB for NeMo) and has comparable speed.

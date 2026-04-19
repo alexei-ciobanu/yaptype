@@ -12,4 +12,7 @@ wheels/
 # Ruff cache
 .ruff_cache/
 
+# Local notes
+ignore/
+
 ignore/

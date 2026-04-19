@@ -104,7 +104,11 @@ def ensure_server(args) -> bool:
 
     # Build the server command
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    server_script = os.path.join(script_dir, "asr_server.py")
+    backend = getattr(args, "backend", "nemo")
+    if backend == "llama":
+        server_script = os.path.join(script_dir, "asr_server_llama.py")
+    else:
+        server_script = os.path.join(script_dir, "asr_server.py")
     venv_python = os.path.join(script_dir, ".venv", "Scripts", "python.exe")
 
     if not os.path.exists(venv_python):
@@ -295,6 +299,12 @@ examples:
     )
     parser.add_argument(
         "--port", type=int, default=DEFAULT_PORT, help=f"Server port (default: {DEFAULT_PORT})"
+    )
+    parser.add_argument(
+        "--backend",
+        choices=["nemo", "llama"],
+        default="nemo",
+        help="ASR backend: nemo (Parakeet) or llama (Qwen3-ASR via llama-server) (default: nemo)",
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)
