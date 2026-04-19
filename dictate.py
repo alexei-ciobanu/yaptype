@@ -276,51 +276,30 @@ def main():
             print("  (empty transcription)")
 
     # Set up global hotkey listener
-    from pynput.keyboard import Key, Listener
-
-    # Track modifier state for Ctrl+C detection
-    ctrl_pressed = False
+    from pynput.keyboard import Listener
 
     def on_press(key):
-        nonlocal ctrl_pressed
-        if key in (Key.ctrl_l, Key.ctrl_r):
-            ctrl_pressed = True
-        # Detect Ctrl+C: stop the listener
-        try:
-            if ctrl_pressed and hasattr(key, "char") and key.char == "\x03":
-                print("\nBye!")
-                return False
-        except AttributeError:
-            pass
         if key == target_key:
             start_recording()
 
     def on_release(key):
-        nonlocal ctrl_pressed
-        if key in (Key.ctrl_l, Key.ctrl_r):
-            ctrl_pressed = False
         if key == target_key:
             # Run transcription in a thread to not block the listener
             threading.Thread(target=stop_recording_and_transcribe, daemon=True).start()
-        # Detect Ctrl+C: stop the listener
-        try:
-            if ctrl_pressed and hasattr(key, "char") and key.char == "\x03":
-                print("\nBye!")
-                return False  # Stops the listener
-        except AttributeError:
-            pass
 
     key_display = args.key.replace("_", " ").title()
     print(f"\n{'=' * 50}")
     print("  Push-to-talk dictation ready!")
     print(f"  Hold [{key_display}] to record, release to transcribe")
     print(f"  Microphone: {sd.query_devices(args.device, 'input')['name']}")
-    print("  Press Ctrl+C to quit")
+    print("  Press Ctrl+C in this terminal to quit")
     print(f"{'=' * 50}\n")
 
     with Listener(on_press=on_press, on_release=on_release) as listener:
         try:
-            listener.join()
+            # Poll instead of join() so the main thread can receive KeyboardInterrupt
+            while listener.running:
+                time.sleep(0.1)
         except KeyboardInterrupt:
             print("\nBye!")
 
